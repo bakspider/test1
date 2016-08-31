@@ -1,0 +1,46 @@
+.panel.panel-primary{
+	width:47%;
+	margin-right:2%;
+	margin-left:1%;
+	float:left;
+}
+.panel.panel-primary.search_results{
+	width:97%;
+}
+
+.glyphicon.glyphicon-chevron-up, .glyphicon.glyphicon-chevron-down{
+	float:right;
+}
+
+.form-visible, .form-group{
+	width:100%;
+}
+.basic_info, .genus_species{
+	width:31%;
+	float:left;
+	border-right:1px solid #ccc;
+	margin-right:12px;
+}
+.basic_reference {
+    width: 35%;
+    display: inline-block;
+}
+
+.dropdown, .dropup {
+    position: relative;
+    border: 1px solid #ccc;
+    width: 70%;
+    height: 34px;
+    border-radius: 4px;
+}
+
+.intron{
+	width:49%;
+	float:left;
+	display:inline-block;
+}
+
+.rtpcr_confirm{
+	width:49%;
+	display:inline-block;
+}
