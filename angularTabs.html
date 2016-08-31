@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="myApp">
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="bootstrap/bootstrap.css"/>
+<link rel="stylesheet" href="css/angular.css"/>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="js/app.js"></script>
+
+<style>
+.left-side-tab{
+	width:8%;
+	display:inline-block;
+	float:left;
+}
+
+.left-side-tab div label {
+    text-decoration: none;
+    color: #ffffff;
+    height: 30px;
+    position: relative;
+    font-weight: normal;
+    top: 8px;
+    left: 5px;
+}
+
+
+.right-side-tab{
+	width:90%;
+	border:1px solid #045090;
+	display:inline-block;
+	clear:left;
+}
+.container {
+	width:100%;
+	display:inline-block;
+}
+.crco, .goi, .upload, .advsearch, .blast , .administration, .inventory{
+	border:1px solid black;
+	margin-bottom:1px;
+	background-color:#045090;
+}
+.mol-bio-tab, .construct, .strain, .expression, .fermentation, .purification, .characterization, .application{
+	text-decoration: none;
+	color:#fff;
+}
+.mol-bio-tab, .construct, .strain, .expression, .fermentation, .purification, .characterization {
+	float:left;
+	display:inline-block;
+	width:12.4%;
+	text-align:center;
+	background-color:#045090;
+	border-right:1px solid #fff;
+	height:30px;
+	margin-bottom:10px;
+}
+.mol-bio-tab label, .construct label, .strain label, .expression label, .fermentation label, .purification label, .characterization label, .application label{
+	position:relative;
+	top:5px;
+	font-weight:normal
+}
+
+.application{
+	clear:left;
+	display:inline-block;
+	width:12.1%;
+	text-align:center;
+	background-color:#045090;
+	height:30px;
+	margin-bottom:10px;
+}
+h1{
+	color:#337ab7;
+	font-size:18px;
+	padding-left:10px;
+}
+p{
+	padding-left:7%;
+}	
+.inner-tab-one {
+	margin:10px;
+}
+</style>
+</head>
+<body>
+	<div class="container" ng-init="tab=1" style="margin:10px 0;">
+		<div class="left-side-tab">
+			<a href ng-click="tab=1">
+				<div class="goi" ng-class="{active:tab===1}">
+					<label>GOI</label>
+				</div>
+			</a>
+			<a href ng-click="tab=2">
+				<div class="upload" ng-class="{active:tab===2}">
+					<label>Upload</label>
+				</div>
+			</a>
+			<a href ng-click="tab=3">
+				<div class="advsearch" ng-class="{active:tab===3}">
+					<label>Adv.Search</label>
+				</div>
+			</a>
+			<a href ng-click="tab=4">
+				<div class="blast" ng-class="{active:tab===4}">
+					<label>BLAST</label>
+				</div>
+			</a>
+			<a href ng-click="tab=5">
+				<div class="administration" ng-class="{active:tab===5}">
+					<label>Administration</label>
+				</div>
+			</a>
+			<a href ng-click="tab=6">
+				<div class="inventory" ng-class="{active:tab===6}">
+					<label>Inventory</label>
+				</div>
+			</a>
+		</div>
+		<div class="right-side-tab">
+			<div ng-show="tab===1">
+				<div class="inner-tab-one">
+					<a href ng-click="tab=1">
+						<div class="mol-bio-tab" ng-class="{active:tab===1}">
+							<label>Molecular Biology</label>
+						</div>
+					</a>
+					<a href ng-click="tab=7">
+						<div class="construct" ng-class="{active:tab===7}">
+							<label>Construct</label>
+						</div>
+					</a>
+					<a href ng-click="tab=8">
+						<div class="strain" ng-class="{active:tab===8}">
+							<label>Strain</label>
+						</div>
+					</a>
+					<a href ng-click="tab=9">
+						<div class="expression" ng-class="{active:tab===9}">
+							<label>Expression</label>
+						</div>
+					</a>
+					<a href ng-click="tab=10">
+						<div class="fermentation" ng-class="{active:tab===10}">
+							<label>Fermentation</label>
+						</div>
+					</a>
+					<a href ng-click="tab=11">
+						<div class="purification" ng-class="{active:tab===11}">
+							<label>Purification</label>
+						</div>
+					</a>
+					<a href ng-click="tab=12">
+						<div class="characterization" ng-class="{active:tab===12}">
+							<label>Characterization</label>
+						</div>
+					</a>
+					<a href ng-click="tab=13">
+						<div class="application" ng-class="{active:tab===13}">
+							<label>Application</label>
+						</div>
+					</a>
+				</div>
+				<div style="width:100%;">
+					<div  class="panel panel-primary" ng-controller="myCtrl">
+						<div class="panel-heading"> 
+							Blast Search
+							<span ng-click="toggle();changeClass();" class="{{class}}"></span>
+						</div>
+						<div class="panel-body">
+							<div ng-show="visible">
+								<textarea class="form-control" rows="12" id="comment"></textarea>
+								<div class="radio">
+								  <label><input type="radio" name="optradio"><b>BLASTP--Using Protein Sequence</b></label>
+								</div>
+								<div class="radio">
+								  <label><input type="radio" name="optradio"><b>BLASTX--Using DNA Sequence</b></label>
+								</div>
+								<button type="button" class="btn btn-primary">Search</button>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-primary" ng-controller="myCtrl">
+						<div class="panel-heading"> 
+							Search Criteria
+							<span ng-click="toggle();changeClass();" class="{{class}}"></span>
+						</div>
+						<div class="panel-body">
+							<div ng-show="visible" class="form-visible">
+								<div class="form-group">
+									<label style="float:left;width:30%;">Keyword Search</label>
+									<input type="text" class="form-control" name="keysearch" id="keysearch" value=""  style="width:70%"/>
+								</div>
+								<label style="color:#337ab7;">Advanced Search</label>
+								<div class="form-group">
+									<label style="float:left;width:30%;">Backbone Name</label>
+									<input type="text" class="form-control" name="backbonename" id="backbonename" value=""  style="width:70%"/>
+								</div>
+								<div class="form-group">
+									<label style="float:left;width:30%;">Class</label>
+									<select name="class_dropdown" id="class_dropdown" class="dropdown">
+										<option value="--Select--">Select</option>
+										<option value="">Option-1</option>
+										<option value="">Option-2</option>
+										<option value="">Option-3</option>
+										<option value="">Option-4</option>
+										<option value="">Option-5</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label style="float:left;width:30%;">Strain</label>
+									<select name="strain_dropdown" id="strain_dropdown" class="dropdown">
+										<option value="--Select--">Select</option>
+										<option value="">Option-1</option>
+										<option value="">Option-2</option>
+										<option value="">Option-3</option>
+										<option value="">Option-4</option>
+										<option value="">Option-5</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label style="float:left;width:30%;">Source Spicies</label>
+									<input type="text" class="form-control" name="source_spicies" id="source_spicies" value=""  style="width:70%"/>
+								</div>								
+								<button type="button" class="btn btn-primary">Search</button>
+							</div>
+						</div>
+					</div>					
+				</div>
+				<div style="width:100%">
+					<div  class="panel panel-primary search_results" ng-controller="myCtrl">
+						<div class="panel-heading"> 
+							Search Results
+							<span ng-click="toggle();changeClass();" class="{{class}}"></span>
+						</div>
+						<div class="panel-body">
+							<div ng-show="visible" class="table-responsive">          
+							  <table class="table">
+								<thead>
+								  <tr>
+									<th>ID</th>
+									<th>GOI Number</th>
+									<th>Backbone Name</th>
+									<th>Class</th>
+									<th>Source</th>
+									<th>Active</th>
+									<th>Expr.Protine</th>
+								  </tr>
+								</thead>
+								<tbody>
+								  <tr>
+									<td>1</td>
+									<td>CRC01001</td>
+									<td>MlibLip1</td>
+									<td>Lipase</td>
+									<td>Melogenomic Library</td>
+									<td><input type="checkbox" name="" id="" value=""></td>
+									<td><input type="checkbox" name="" id="" value=""></td>
+								  </tr>
+								  <tr>
+									<td>2</td>
+									<td>CRC01002</td>
+									<td>MlibLip2</td>
+									<td>Lipase</td>
+									<td>Melogenomic Library</td>
+									<td><input type="checkbox" name="" id="" value=""></td>
+									<td><input type="checkbox" name="" id="" value=""></td>
+								  </tr>
+								  <tr>
+									<td>3</td>
+									<td>CRC01003</td>
+									<td>MlibLip3</td>
+									<td>Lipase</td>
+									<td>Melogenomic Library</td>
+									<td><input type="checkbox" name="" id="" value=""></td>
+									<td><input type="checkbox" name="" id="" value=""></td>
+								  </tr>
+								  <tr>
+									<td>4</td>
+									<td>CRC01004</td>
+									<td>MlibLip4</td>
+									<td>Lipase</td>
+									<td>Melogenomic Library</td>
+									<td><input type="checkbox" name="" id="" value=""></td>
+									<td><input type="checkbox" name="" id="" value=""></td>
+								  </tr>
+								  <tr>
+									<td>5</td>
+									<td>CRC01005</td>
+									<td>MlibLip5</td>
+									<td>Lipase</td>
+									<td>Melogenomic Library</td>
+									<td><input type="checkbox" name="" id="" value=""></td>
+									<td><input type="checkbox" name="" id="" value=""></td>
+								  </tr>
+								</tbody>
+							  </table>
+							  </div>
+						</div>
+					</div>
+				</div>
+				<div style="width:100%;">
+					<div style="float:right;margin-right:12px;margin-bottom:10px;">
+						<button type="button" class="btn btn-primary" style="margin-right:10px;">Geneology</button>
+						<button type="button" class="btn btn-primary" style="margin-right:10px;">Create Variant</button>
+						<button type="button" class="btn btn-primary" style="margin-right:10px;">New GOI</button>
+					</div>
+				</div>
+				<div style="width:100%">
+					<div  class="panel panel-primary search_results" ng-controller="myCtrl">
+						<div class="panel-heading"> 
+							Basic Molocular Biology Information
+							<span ng-click="toggle();changeClass();" class="{{class}}"></span>
+						</div>
+						<div class="panel-body">
+							<div ng-show="visible">          
+								<div class="basic_info">
+									<label style="color:#337ab7;">Basic Info</label>
+									<div style="width:100%;">
+										<label style="width:30%;float:left;">System ID</label>
+										<p style="width:67%;">000001004</p>
+									</div>
+									<div style="width:100%;margin-bottom:10px;">
+										<label style="width:30%;float:left;">GOI Number</label>
+										<input type="text" class="form-control" name="goinum" id="goinum" value=""  style="width:67%"/>
+									</div>
+									<div style="width:100%;margin-bottom:10px;">
+										<label style="width:30%;float:left;">Backbone Name</label>
+										<input type="text" class="form-control" name="b_name" id="b_name" value=""  style="width:67%"/>
+									</div>
+								</div>
+								<div class="genus_species">
+									<label style="color:#337ab7;">Genus and Species</label>
+									<div style="width:100%;margin-bottom:10px;">
+										<label style="width:30%;float:left;">Enzyme Class</label>
+										<select name="enzyme_dropdown" style="width:67%;" id="enzyme_dropdown" class="dropdown">
+											<option value="--Select--">Select</option>
+											<option value="">Option-1</option>
+											<option value="">Option-2</option>
+											<option value="">Option-3</option>
+											<option value="">Option-4</option>
+											<option value="">Option-5</option>
+										</select>
+									</div>
+									<div style="width:100%;margin-bottom:10px;">
+										<label style="width:30%;float:left;">Source</label>
+										<select name="source_dropdown" style="width:67%;" id="source_dropdown" class="dropdown">
+											<option value="--Select--">Select</option>
+											<option value="">Option-1</option>
+											<option value="">Option-2</option>
+											<option value="">Option-3</option>
+											<option value="">Option-4</option>
+											<option value="">Option-5</option>
+										</select>
+									</div>
+									<div style="width:100%;margin-bottom:10px;">
+										<label style="width:30%;float:left;">Strain</label>
+										<input type="text" class="form-control" name="strain_name" id="strain_name" value=""  style="width:67%"/>
+									</div>
+								</div>
+								<div class="basic_reference">
+									<label style="color:#337ab7;">Reference</label>
+									<div style="width:100%;margin-bottom:10px;">
+										<label style="width:30%;float:left;">EC#</label>
+										<input type="text" class="form-control" name="ecnum" id="ecnum" value=""  style="width:67%"/>
+									</div>
+									<div style="width:100%;margin-bottom:10px;">
+										<label style="width:30%;float:left;">NCBI#</label>
+										<input type="text" class="form-control" name="ncbinum" id="ncbinum" value=""  style="width:67%"/>
+									</div>
+									<div style="width:100%;margin-bottom:10px;">
+										<label style="width:30%;float:left;">Unipro1#</label>
+										<input type="text" class="form-control" name="unipro1num" id="unipro1num" value=""  style="width:67%"/>
+									</div>
+								</div>
+								<hr>
+								<div class="sequence_info">
+									<label style="color:#337ab7;">Sequence Info</label>
+									<div style="width:100%;margin-bottom:10px;">
+										<div class="gene_sequence">
+											<label style="width:20%;float:left;">Gene Sequence</label>
+											<textarea class="form-control" rows="3" style="width:80%;" id="comment"></textarea>
+										</div>
+									</div>
+									<div style="width:100%;margin-bottom:10px;clear:both;">
+										<div class="intron">
+											<label style="width:41%;float:left;">With Intron?</label>
+											<select name="intron_dropdown" style="width:20%;clear:left;" id="intron_dropdown" class="dropdown">
+												<option value="--Select--">Select</option>
+												<option value="">Option-1</option>
+												<option value="">Option-2</option>
+												<option value="">Option-3</option>
+												<option value="">Option-4</option>
+												<option value="">Option-5</option>
+											</select>
+										</div>
+										<div class="rtpcr_confirm">
+											<label style="width:30%;float:left;">RT-PCR Confirmed</label>
+											<select name="confirm_dropdown" style="width:40%;clear:left;" id="confirm_dropdown" class="dropdown">
+												<option value="--Select--">Select</option>
+												<option value="">Option-1</option>
+												<option value="">Option-2</option>
+												<option value="">Option-3</option>
+												<option value="">Option-4</option>
+												<option value="">Option-5</option>
+											</select>
+										</div>
+									</div>
+									<div style="width:100%;margin-bottom:10px;">
+										<div class="protein_sequence">
+											<label style="width:20%;float:left;">Protein Sequence</label>
+											<textarea class="form-control" rows="2" style="width:80%;" id="comment"></textarea>
+										</div>
+									</div>
+									<div style="width:100%;margin-bottom:10px;">
+										<div style="width:100%;margin-bottom:10px;">
+											<label style="width:20%;float:left;">Signal Peptide</label>
+											<input type="text" class="form-control" name="unipro1num" id="unipro1num" value=""  style="width:80%"/>
+										</div>
+									</div>
+									<div style="width:100%;margin-bottom:10px;">
+										<div style="width:100%;margin-bottom:10px;">
+											<label style="width:20%;float:left;">Mutation</label>
+											<input type="text" class="form-control" name="mutation" id="mutation" value=""  style="width:20%"/>
+										</div>
+									</div>
+									<div style="width:100%;margin-bottom:10px;">
+										<div style="width:47%;margin-bottom:10px;float:left;display:inline-block;">
+											<label style="width:42.5%;float:left;">PFAM</label>
+											<input type="text" class="form-control" name="mutation" id="mutation" value=""  style="width:43%"/>
+										</div>
+										<div style="width:47%;margin-bottom:10px;clear:left;display:inline-block;">
+											<label style="width:42.5%;float:left;">Extinction Cooefficient</label>
+											<input type="text" class="form-control" name="mutation" id="mutation" value=""  style="width:43%"/>
+										</div>
+									</div>
+									<div style="width:100%;margin-bottom:10px;">
+										<div style="width:47%;margin-bottom:10px;float:left;display:inline-block;">
+											<div style="margin-bottom:10px;">
+												<label style="width:42.5%;float:left;">PL</label>
+												<input type="text" class="form-control" name="mutation" id="mutation" value=""  style="width:43%"/>
+											</div>
+											<div>
+												<label style="width:42.5%;float:left;">Theoretical MW</label>
+												<input type="text" class="form-control" name="mutation" id="mutation" value=""  style="width:43%"/>
+											</div>
+										</div>
+										<div style="width:53%;margin-bottom:10px;clear:left;display:inline-block;">
+											<label style="width:37.5%;float:left;">Comments</label>
+											<textarea class="form-control" rows="4" style="width:60%;" id="comment"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="upload_sequence">
+									<label style="color:#337ab7;">Upload Sequence Formated File</label>
+									<div style="width:100%;">
+										<input type="text" class="form-control" name="mutation" id="mutation" value=""  style="width:43%;float:left;margin-right:10px;"/>
+										<button type="button" class="btn btn-primary" style="margin-right:10px;">Browse</button>
+										<button type="button" class="btn btn-primary" style="margin-right:10px;">Upload</button>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div ng-show="tab===2">
+				<h1>Upload</h1>
+				<p>Select is now part of the Source BioScience group.</p>
+				<p>Source BioScience is a modern thinking contract analytical services laboratory operating in the pharmaceutical, animal health and medical devices  sectors. </p>
+				<p>Source BioScience aims to have its customers at the heart of the business. Our flexible and proactive approach is designed to deliver significant added value to your organisation. </p>
+				<p>For all stages of development, marketing authorization and manufacturing, Source BioScience can offer a range of analytical, stability testing  and auditing services to support your organization. To review your analysis and outsourcing requirements contact us to discuss how we can assist.</p>
+				<p>Based at Stirling Enterprise Park, the laboratories are UK MHRA GMP certified and US FDA registe#337ab7 and provide full service testing capabilities for conducting pharmaceutical and medical device quality control.</p>
+			</div>
+			
+			<div ng-show="tab===3">
+				<h1>Advanced Search</h1>
+				<p>Based at Stirling Enterprise Park, the laboratories are UK MHRA GMP certified and US FDA registe#337ab7 and provide full service testing capabilities for conducting pharmaceutical and medical device quality control.</p>
+				<p>Select is now part of the Source BioScience group.</p>
+				<p>Source BioScience is a modern thinking contract analytical services laboratory operating in the pharmaceutical, animal health and medical devices  sectors. </p>
+				<p>Source BioScience aims to have its customers at the heart of the business. Our flexible and proactive approach is designed to deliver significant added value to your organisation. </p>
+			</div>
+			
+			<div ng-show="tab===4">
+				<h1>Blast</h1>
+				<p>For all stages of development, marketing authorization and manufacturing, Source BioScience can offer a range of analytical, stability testing  and auditing services to support your organization. To review your analysis and outsourcing requirements contact us to discuss how we can assist.</p>
+				<p>Source BioScience is a modern thinking contract analytical services laboratory operating in the pharmaceutical, animal health and medical devices  sectors. </p>
+				<p>Source BioScience aims to have its customers at the heart of the business. Our flexible and proactive approach is designed to deliver significant added value to your organisation. </p>
+				<p>For all stages of development, marketing authorization and manufacturing, Source BioScience can offer a range of analytical, stability testing  and auditing services to support your organization. To review your analysis and outsourcing requirements contact us to discuss how we can assist.</p>
+				<p>Based at Stirling Enterprise Park, the laboratories are UK MHRA GMP certified and US FDA registe#337ab7 and provide full service testing capabilities for conducting pharmaceutical and medical device quality control.</p>
+				<p>Source BioScience are able to offer full support to the pharmaceutical industry including raw material testing, finished product analysis, stability testing, microbiology services and Qualified Person batch release.</p>
+			</div>
+			
+			<div ng-show="tab===5">
+				<h1>Administration</h1>
+				<p>Source BioScience offers a range of microbiology services covering critical microbiological tests requi#337ab7 to provide microbial quality control of pharmaceuticals and medical devices as requi#337ab7 under EU safety of medicines regulations.</p>
+				<p>Source BioScience is a modern thinking contract analytical services laboratory operating in the pharmaceutical, animal health and medical devices  sectors. </p>
+				<p>Source BioScience aims to have its customers at the heart of the business. Our flexible and proactive approach is designed to deliver significant added value to your organisation. </p>
+				<p>For all stages of development, marketing authorization and manufacturing, Source BioScience can offer a range of analytical, stability testing  and auditing services to support your organization. To review your analysis and outsourcing requirements contact us to discuss how we can assist.</p>
+				<p>Based at Stirling Enterprise Park, the laboratories are UK MHRA GMP certified and US FDA registe#337ab7 and provide full service testing capabilities for conducting pharmaceutical and medical device quality control.</p>
+				<p>Source BioScience are able to offer full support to the pharmaceutical industry including raw material testing, finished product analysis, stability testing, microbiology services and Qualified Person batch release.</p>
+			</div>
+			
+			<div ng-show="tab===6">
+				<h1>Inventory</h1>
+				<p>Our aim is to provide pharmaceutical and biotech clients with novel, differentiated products that have the potential to be highly marketable. We select our assets and design our development programs solely with this objective in mind.</p>
+				<p>Source BioScience offers a range of microbiology services covering critical microbiological tests requi#337ab7 to provide microbial quality control of pharmaceuticals and medical devices as requi#337ab7 under EU safety of medicines regulations.</p>
+				<p>Source BioScience is a modern thinking contract analytical services laboratory operating in the pharmaceutical, animal health and medical devices  sectors. </p>
+				<p>Source BioScience aims to have its customers at the heart of the business. Our flexible and proactive approach is designed to deliver significant added value to your organisation. </p>
+				<p>For all stages of development, marketing authorization and manufacturing, Source BioScience can offer a range of analytical, stability testing  and auditing services to support your organization. To review your analysis and outsourcing requirements contact us to discuss how we can assist.</p>
+				<p>Based at Stirling Enterprise Park, the laboratories are UK MHRA GMP certified and US FDA registe#337ab7 and provide full service testing capabilities for conducting pharmaceutical and medical device quality control.</p>
+				<p>Source BioScience are able to offer full support to the pharmaceutical industry including raw material testing, finished product analysis, stability testing, microbiology services and Qualified Person batch release.</p>
+			</div>
+			
+			<div ng-show="tab===7">
+				<div class="inner-tab-one">
+					<a href ng-click="tab=1">
+						<div class="mol-bio-tab" ng-class="{active:tab===1}">
+							<label>Molecular Biology</label>
+						</div>
+					</a>
+					<a href ng-click="tab=7">
+						<div class="construct" ng-class="{active:tab===7}">
+							<label>Construct</label>
+						</div>
+					</a>
+					<a href ng-click="tab=8">
+						<div class="strain" ng-class="{active:tab===8}">
+							<label>Strain</label>
+						</div>
+					</a>
+					<a href ng-click="tab=9">
+						<div class="expression" ng-class="{active:tab===9}">
+							<label>Expression</label>
+						</div>
+					</a>
+					<a href ng-click="tab=10">
+						<div class="fermentation" ng-class="{active:tab===10}">
+							<label>Fermentation</label>
+						</div>
+					</a>
+					<a href ng-click="tab=11">
+						<div class="purification" ng-class="{active:tab===11}">
+							<label>Purification</label>
+						</div>
+					</a>
+					<a href ng-click="tab=12">
+						<div class="characterization" ng-class="{active:tab===12}">
+							<label>Characterization</label>
+						</div>
+					</a>
+					<a href ng-click="tab=13">
+						<div class="application" ng-class="{active:tab===13}">
+							<label>Application</label>
+						</div>
+					</a>
+				</div>
+				<h1>Construct</h1>
+				<p>Source BioScience is a modern thinking contract analytical services laboratory operating in the pharmaceutical, animal health and medical devices  sectors. </p>
+				<p>Source BioScience aims to have its customers at the heart of the business. Our flexible and proactive approach is designed to deliver significant added value to your organisation. </p>
+				<p>For all stages of development, marketing authorization and manufacturing, Source BioScience can offer a range of analytical, stability testing  and auditing services to support your organization. To review your analysis and outsourcing requirements contact us to discuss how we can assist.</p>
+				<p>Modern Bioscience is a drug development company that sources late-stage discovery projects from academia and spin-out companies, conducts early proof-of-principle clinical studies and subsequently out-licenses the resulting programs to the pharmaceutical and biotechnology industries</p>
+				<p>Modern Biosciences is a drug development company that in-licenses late-stage discovery projects from academia and spin out companies. Our team of experts plan and execute a focused development program for the in-licensed asset which typically includes proof-of-mechanism and/or proof-of-principle human studies. The resulting data package is intended to maximise the value of the asset prior to entering licensing negotiations with pharmaceutical or biotech partners.</p>
+				<p>Modern Biosciences’ three main business activities are in-licensing, project development and commercialisation.</p>
+				<p>Modern Biosciences’ office is based in the City of London and its founding investor is IP Group plc, a London Stock Exchange listed company.</p>
+			</div>
+			<div ng-show="tab===8">
+				<div class="inner-tab-one">
+					<a href ng-click="tab=1">
+						<div class="mol-bio-tab" ng-class="{active:tab===1}">
+							<label>Molecular Biology</label>
+						</div>
+					</a>
+					<a href ng-click="tab=7">
+						<div class="construct" ng-class="{active:tab===7}">
+							<label>Construct</label>
+						</div>
+					</a>
+					<a href ng-click="tab=8">
+						<div class="strain" ng-class="{active:tab===8}">
+							<label>Strain</label>
+						</div>
+					</a>
+					<a href ng-click="tab=9">
+						<div class="expression" ng-class="{active:tab===9}">
+							<label>Expression</label>
+						</div>
+					</a>
+					<a href ng-click="tab=10">
+						<div class="fermentation" ng-class="{active:tab===10}">
+							<label>Fermentation</label>
+						</div>
+					</a>
+					<a href ng-click="tab=11">
+						<div class="purification" ng-class="{active:tab===11}">
+							<label>Purification</label>
+						</div>
+					</a>
+					<a href ng-click="tab=12">
+						<div class="characterization" ng-class="{active:tab===12}">
+							<label>Characterization</label>
+						</div>
+					</a>
+					<a href ng-click="tab=13">
+						<div class="application" ng-class="{active:tab===13}">
+							<label>Application</label>
+						</div>
+					</a>
+				</div>
+				<h1>Strain</h1>
+				<p>Modern Bioscience is a drug development company that sources late-stage discovery projects from academia and spin-out companies, conducts early proof-of-principle clinical studies and subsequently out-licenses the resulting programs to the pharmaceutical and biotechnology industries</p>
+				<p>Modern Bioscience is a drug development company that sources late-stage discovery projects from academia and spin-out companies, conducts early proof-of-principle clinical studies and subsequently out-licenses the resulting programs to the pharmaceutical and biotechnology industries</p>
+				<p>Source BioScience is a modern thinking contract analytical services laboratory operating in the pharmaceutical, animal health and medical devices  sectors. </p>
+				<p>Source BioScience aims to have its customers at the heart of the business. Our flexible and proactive approach is designed to deliver significant added value to your organisation. </p>
+				<p>For all stages of development, marketing authorization and manufacturing, Source BioScience can offer a range of analytical, stability testing  and auditing services to support your organization. To review your analysis and outsourcing requirements contact us to discuss how we can assist.</p>
+				<p>Modern Bioscience is a drug development company that sources late-stage discovery projects from academia and spin-out companies, conducts early proof-of-principle clinical studies and subsequently out-licenses the resulting programs to the pharmaceutical and biotechnology industries</p>
+				<p>Modern Biosciences is a drug development company that in-licenses late-stage discovery projects from academia and spin out companies. Our team of experts plan and execute a focused development program for the in-licensed asset which typically includes proof-of-mechanism and/or proof-of-principle human studies. The resulting data package is intended to maximise the value of the asset prior to entering licensing negotiations with pharmaceutical or biotech partners.</p>
+				<p>Modern Biosciences’ three main business activities are in-licensing, project development and commercialisation.</p>
+				<p>Modern Biosciences’ office is based in the City of London and its founding investor is IP Group plc, a London Stock Exchange listed company.</p>
+			</div>
+			
+			<div ng-show="tab===9">
+				<div class="inner-tab-one">
+					<a href ng-click="tab=1">
+						<div class="mol-bio-tab" ng-class="{active:tab===1}">
+							<label>Molecular Biology</label>
+						</div>
+					</a>
+					<a href ng-click="tab=7">
+						<div class="construct" ng-class="{active:tab===7}">
+							<label>Construct</label>
+						</div>
+					</a>
+					<a href ng-click="tab=8">
+						<div class="strain" ng-class="{active:tab===8}">
+							<label>Strain</label>
+						</div>
+					</a>
+					<a href ng-click="tab=9">
+						<div class="expression" ng-class="{active:tab===9}">
+							<label>Expression</label>
+						</div>
+					</a>
+					<a href ng-click="tab=10">
+						<div class="fermentation" ng-class="{active:tab===10}">
+							<label>Fermentation</label>
+						</div>
+					</a>
+					<a href ng-click="tab=11">
+						<div class="purification" ng-class="{active:tab===11}">
+							<label>Purification</label>
+						</div>
+					</a>
+					<a href ng-click="tab=12">
+						<div class="characterization" ng-class="{active:tab===12}">
+							<label>Characterization</label>
+						</div>
+					</a>
+					<a href ng-click="tab=13">
+						<div class="application" ng-class="{active:tab===13}">
+							<label>Application</label>
+						</div>
+					</a>
+				</div>
+				<h1>Expression</h1>
+				<p>Source BioScience aims to have its customers at the heart of the business. Our flexible and proactive approach is designed to deliver significant added value to your organisation. </p>
+				<p>For all stages of development, marketing authorization and manufacturing, Source BioScience can offer a range of analytical, stability testing  and auditing services to support your organization. To review your analysis and outsourcing requirements contact us to discuss how we can assist.</p>
+				<p>Modern Bioscience is a drug development company that sources late-stage discovery projects from academia and spin-out companies, conducts early proof-of-principle clinical studies and subsequently out-licenses the resulting programs to the pharmaceutical and biotechnology industries</p>
+				<p>Modern Biosciences is a drug development company that in-licenses late-stage discovery projects from academia and spin out companies. Our team of experts plan and execute a focused development program for the in-licensed asset which typically includes proof-of-mechanism and/or proof-of-principle human studies. The resulting data package is intended to maximise the value of the asset prior to entering licensing negotiations with pharmaceutical or biotech partners.</p>
+				<p>Modern Biosciences’ three main business activities are in-licensing, project development and commercialisation.</p>
+				<p>Modern Biosciences’ office is based in the City of London and its founding investor is IP Group plc, a London Stock Exchange listed company.</p>
+			</div>
+			
+			<div ng-show="tab===10">
+				<div class="inner-tab-one">
+					<a href ng-click="tab=1">
+						<div class="mol-bio-tab" ng-class="{active:tab===1}">
+							<label>Molecular Biology</label>
+						</div>
+					</a>
+					<a href ng-click="tab=7">
+						<div class="construct" ng-class="{active:tab===7}">
+							<label>Construct</label>
+						</div>
+					</a>
+					<a href ng-click="tab=8">
+						<div class="strain" ng-class="{active:tab===8}">
+							<label>Strain</label>
+						</div>
+					</a>
+					<a href ng-click="tab=9">
+						<div class="expression" ng-class="{active:tab===9}">
+							<label>Expression</label>
+						</div>
+					</a>
+					<a href ng-click="tab=10">
+						<div class="fermentation" ng-class="{active:tab===10}">
+							<label>Fermentation</label>
+						</div>
+					</a>
+					<a href ng-click="tab=11">
+						<div class="purification" ng-class="{active:tab===11}">
+							<label>Purification</label>
+						</div>
+					</a>
+					<a href ng-click="tab=12">
+						<div class="characterization" ng-class="{active:tab===12}">
+							<label>Characterization</label>
+						</div>
+					</a>
+					<a href ng-click="tab=13">
+						<div class="application" ng-class="{active:tab===13}">
+							<label>Application</label>
+						</div>
+					</a>
+				</div>
+				<h1>Fermentation</h1>
+				<p>Modern Biosciences is a drug development company that in-licenses late-stage discovery projects from academia and spin out companies. Our team of experts plan and execute a focused development program for the in-licensed asset which typically includes proof-of-mechanism and/or proof-of-principle human studies. The resulting data package is intended to maximise the value of the asset prior to entering licensing negotiations with pharmaceutical or biotech partners.</p>
+				<p>Source BioScience aims to have its customers at the heart of the business. Our flexible and proactive approach is designed to deliver significant added value to your organisation. </p>
+				<p>Modern Biosciences is a drug development company that in-licenses late-stage discovery projects from academia and spin out companies. Our team of experts plan and execute a focused development program for the in-licensed asset which typically includes proof-of-mechanism and/or proof-of-principle human studies. The resulting data package is intended to maximise the value of the asset prior to entering licensing negotiations with pharmaceutical or biotech partners.</p>
+				<p>For all stages of development, marketing authorization and manufacturing, Source BioScience can offer a range of analytical, stability testing  and auditing services to support your organization. To review your analysis and outsourcing requirements contact us to discuss how we can assist.</p>
+				<p>Modern Bioscience is a drug development company that sources late-stage discovery projects from academia and spin-out companies, conducts early proof-of-principle clinical studies and subsequently out-licenses the resulting programs to the pharmaceutical and biotechnology industries</p>
+				<p>Modern Biosciences is a drug development company that in-licenses late-stage discovery projects from academia and spin out companies. Our team of experts plan and execute a focused development program for the in-licensed asset which typically includes proof-of-mechanism and/or proof-of-principle human studies. The resulting data package is intended to maximise the value of the asset prior to entering licensing negotiations with pharmaceutical or biotech partners.</p>
+				<p>Modern Biosciences’ three main business activities are in-licensing, project development and commercialisation.</p>
+				<p>Modern Biosciences’ office is based in the City of London and its founding investor is IP Group plc, a London Stock Exchange listed company.</p>
+			</div>
+			
+			<div ng-show="tab===11">
+				<div class="inner-tab-one">
+					<a href ng-click="tab=1">
+						<div class="mol-bio-tab" ng-class="{active:tab===1}">
+							<label>Molecular Biology</label>
+						</div>
+					</a>
+					<a href ng-click="tab=7">
+						<div class="construct" ng-class="{active:tab===7}">
+							<label>Construct</label>
+						</div>
+					</a>
+					<a href ng-click="tab=8">
+						<div class="strain" ng-class="{active:tab===8}">
+							<label>Strain</label>
+						</div>
+					</a>
+					<a href ng-click="tab=9">
+						<div class="expression" ng-class="{active:tab===9}">
+							<label>Expression</label>
+						</div>
+					</a>
+					<a href ng-click="tab=10">
+						<div class="fermentation" ng-class="{active:tab===10}">
+							<label>Fermentation</label>
+						</div>
+					</a>
+					<a href ng-click="tab=11">
+						<div class="purification" ng-class="{active:tab===11}">
+							<label>Purification</label>
+						</div>
+					</a>
+					<a href ng-click="tab=12">
+						<div class="characterization" ng-class="{active:tab===12}">
+							<label>Characterization</label>
+						</div>
+					</a>
+					<a href ng-click="tab=13">
+						<div class="application" ng-class="{active:tab===13}">
+							<label>Application</label>
+						</div>
+					</a>
+				</div>
+				<h1>Purification</h1>
+				<p>For all stages of development, marketing authorization and manufacturing, Source BioScience can offer a range of analytical, stability testing  and auditing services to support your organization. To review your analysis and outsourcing requirements contact us to discuss how we can assist.</p>
+				<p>Source BioScience aims to have its customers at the heart of the business. Our flexible and proactive approach is designed to deliver significant added value to your organisation. </p>
+				<p>For all stages of development, marketing authorization and manufacturing, Source BioScience can offer a range of analytical, stability testing  and auditing services to support your organization. To review your analysis and outsourcing requirements contact us to discuss how we can assist.</p>
+				<p>Modern Bioscience is a drug development company that sources late-stage discovery projects from academia and spin-out companies, conducts early proof-of-principle clinical studies and subsequently out-licenses the resulting programs to the pharmaceutical and biotechnology industries</p>
+				<p>Modern Biosciences is a drug development company that in-licenses late-stage discovery projects from academia and spin out companies. Our team of experts plan and execute a focused development program for the in-licensed asset which typically includes proof-of-mechanism and/or proof-of-principle human studies. The resulting data package is intended to maximise the value of the asset prior to entering licensing negotiations with pharmaceutical or biotech partners.</p>
+				<p>Modern Biosciences’ three main business activities are in-licensing, project development and commercialisation.</p>
+				<p>Modern Biosciences’ office is based in the City of London and its founding investor is IP Group plc, a London Stock Exchange listed company.</p>
+			</div>
+			
+			<div ng-show="tab===12">
+				<div class="inner-tab-one">
+					<a href ng-click="tab=1">
+						<div class="mol-bio-tab" ng-class="{active:tab===1}">
+							<label>Molecular Biology</label>
+						</div>
+					</a>
+					<a href ng-click="tab=7">
+						<div class="construct" ng-class="{active:tab===7}">
+							<label>Construct</label>
+						</div>
+					</a>
+					<a href ng-click="tab=8">
+						<div class="strain" ng-class="{active:tab===8}">
+							<label>Strain</label>
+						</div>
+					</a>
+					<a href ng-click="tab=9">
+						<div class="expression" ng-class="{active:tab===9}">
+							<label>Expression</label>
+						</div>
+					</a>
+					<a href ng-click="tab=10">
+						<div class="fermentation" ng-class="{active:tab===10}">
+							<label>Fermentation</label>
+						</div>
+					</a>
+					<a href ng-click="tab=11">
+						<div class="purification" ng-class="{active:tab===11}">
+							<label>Purification</label>
+						</div>
+					</a>
+					<a href ng-click="tab=12">
+						<div class="characterization" ng-class="{active:tab===12}">
+							<label>Characterization</label>
+						</div>
+					</a>
+					<a href ng-click="tab=13">
+						<div class="application" ng-class="{active:tab===13}">
+							<label>Application</label>
+						</div>
+					</a>
+				</div>
+				<h1>characterization</h1>
+				<p>Modern Biosciences’ office is based in the City of London and its founding investor is IP Group plc, a London Stock Exchange listed company.</p>
+				<p>Modern Biosciences’ office is based in the City of London and its founding investor is IP Group plc, a London Stock Exchange listed company.</p>
+				<p>Source BioScience aims to have its customers at the heart of the business. Our flexible and proactive approach is designed to deliver significant added value to your organisation. </p>
+				<p>For all stages of development, marketing authorization and manufacturing, Source BioScience can offer a range of analytical, stability testing  and auditing services to support your organization. To review your analysis and outsourcing requirements contact us to discuss how we can assist.</p>
+				<p>Modern Bioscience is a drug development company that sources late-stage discovery projects from academia and spin-out companies, conducts early proof-of-principle clinical studies and subsequently out-licenses the resulting programs to the pharmaceutical and biotechnology industries</p>
+				<p>Modern Biosciences is a drug development company that in-licenses late-stage discovery projects from academia and spin out companies. Our team of experts plan and execute a focused development program for the in-licensed asset which typically includes proof-of-mechanism and/or proof-of-principle human studies. The resulting data package is intended to maximise the value of the asset prior to entering licensing negotiations with pharmaceutical or biotech partners.</p>
+				<p>Modern Biosciences’ three main business activities are in-licensing, project development and commercialisation.</p>
+				<p>Modern Biosciences’ office is based in the City of London and its founding investor is IP Group plc, a London Stock Exchange listed company.</p>
+			</div>
+			
+			<div ng-show="tab===13">
+				<div class="inner-tab-one">
+					<a href ng-click="tab=1">
+						<div class="mol-bio-tab" ng-class="{active:tab===1}">
+							<label>Molecular Biology</label>
+						</div>
+					</a>
+					<a href ng-click="tab=7">
+						<div class="construct" ng-class="{active:tab===7}">
+							<label>Construct</label>
+						</div>
+					</a>
+					<a href ng-click="tab=8">
+						<div class="strain" ng-class="{active:tab===8}">
+							<label>Strain</label>
+						</div>
+					</a>
+					<a href ng-click="tab=9">
+						<div class="expression" ng-class="{active:tab===9}">
+							<label>Expression</label>
+						</div>
+					</a>
+					<a href ng-click="tab=10">
+						<div class="fermentation" ng-class="{active:tab===10}">
+							<label>Fermentation</label>
+						</div>
+					</a>
+					<a href ng-click="tab=11">
+						<div class="purification" ng-class="{active:tab===11}">
+							<label>Purification</label>
+						</div>
+					</a>
+					<a href ng-click="tab=12">
+						<div class="characterization" ng-class="{active:tab===12}">
+							<label>Characterization</label>
+						</div>
+					</a>
+					<a href ng-click="tab=13">
+						<div class="application" ng-class="{active:tab===13}">
+							<label>Application</label>
+						</div>
+					</a>
+				</div>
+				<h1>Application</h1>
+				<p>Our aim is to provide pharmaceutical and biotech clients with novel, differentiated products that have the potential to be highly marketable. We select our assets and design our development programs solely with this objective in mind.</p>
+				<p>Source BioScience aims to have its customers at the heart of the business. Our flexible and proactive approach is designed to deliver significant added value to your organisation. </p>
+				<p>For all stages of development, marketing authorization and manufacturing, Source BioScience can offer a range of analytical, stability testing  and auditing services to support your organization. To review your analysis and outsourcing requirements contact us to discuss how we can assist.</p>
+				<p>Modern Bioscience is a drug development company that sources late-stage discovery projects from academia and spin-out companies, conducts early proof-of-principle clinical studies and subsequently out-licenses the resulting programs to the pharmaceutical and biotechnology industries</p>
+				<p>Modern Biosciences is a drug development company that in-licenses late-stage discovery projects from academia and spin out companies. Our team of experts plan and execute a focused development program for the in-licensed asset which typically includes proof-of-mechanism and/or proof-of-principle human studies. The resulting data package is intended to maximise the value of the asset prior to entering licensing negotiations with pharmaceutical or biotech partners.</p>
+				<p>Modern Biosciences’ three main business activities are in-licensing, project development and commercialisation.</p>
+				<p>Modern Biosciences’ office is based in the City of London and its founding investor is IP Group plc, a London Stock Exchange listed company.</p>
+			</div>
+			
+		</div>	
+	</div>
+</body>
+</html>
